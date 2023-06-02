@@ -1,4 +1,4 @@
-package de.olegrom.postbook.ui.theme
+package de.olegrom.postbook.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

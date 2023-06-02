@@ -24,7 +24,7 @@ buildscript {
         coroutinesVersion = '1.7.1'
         composeVersion = '1.5.0-beta01'
         activityComposeVersion = '1.7.0-alpha03'
-        hiltVersion = '2.44.2'
+        koinVersion = '3.4.1'
         ktorVersion = '2.3.0'
     }
     repositories {
@@ -38,7 +38,6 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.21"
         classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3'
     }
-
 }
 
 plugins {
