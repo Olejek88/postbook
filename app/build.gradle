@@ -1,0 +1,132 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+}
+
+android {
+    namespace 'de.olegrom.postbook'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "de.olegrom.postbook"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.7'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+    implementation "androidx.compose.ui:ui:$composeVersion"
+
+    // Current AndroidX dependencies
+    //implementation "androidx.transition:transition-ktx:1.4.1"
+    //implementation "androidx.compose.animation:animation:1.4.3"
+
+    // AndroidX support and legacy support libraries dependencies
+    //implementation "androidx.appcompat:appcompat:$appcompatVersion"
+    //implementation "androidx.cardview:cardview:$supportLibsVersion"
+    //implementation "androidx.legacy:legacy-support-v4:$supportLibsVersion"
+    //implementation "androidx.legacy:legacy-preference-v14:$supportLibsVersion"
+
+    // Images
+    implementation "io.coil-kt:coil-compose:2.2.2"
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+
+    // Kotlin and Android Kotlin extensions
+    implementation "androidx.core:core-ktx:1.10.1"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+
+    // MVVM + Integration with ViewModels
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
+
+    // Android navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$androidKTXVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$androidKTXVersion"
+    implementation "androidx.navigation:navigation-compose:$androidKTXVersion"
+
+    // Jetpack Compose
+    implementation platform("androidx.compose:compose-bom:2022.10.00")
+    implementation 'androidx.compose.runtime:runtime-livedata:1.4.3'
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+
+    // Material 3
+    implementation "androidx.compose.material3:material3:$materialVersion"
+    implementation "androidx.compose.material3:material3-window-size-class:$materialVersion"
+
+    // Activity
+    implementation "androidx.activity:activity-compose:$activityComposeVersion"
+
+    // Android Studio Preview support
+    implementation "androidx.compose.ui:ui-tooling-preview"
+    debugImplementation "androidx.compose.ui:ui-tooling:$composeVersion"
+
+    // Logging
+    implementation "com.jakewharton.timber:timber:5.0.0"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
+
+    // Accompanist
+    implementation "com.google.accompanist:accompanist-navigation-animation:0.31.2-alpha"
+
+    // Testing
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$composeVersion"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$composeVersion"
+
+    // Ktor
+    implementation "io.ktor:ktor-client-core:$ktorVersion"
+    implementation "io.ktor:ktor-client-json:$ktorVersion"
+    implementation "io.ktor:ktor-client-logging:$ktorVersion"
+    implementation "io.ktor:ktor-client-serialization:$ktorVersion"
+    implementation "io.ktor:ktor-client-content-negotiation:$ktorVersion"
+    implementation "io.ktor:ktor-serialization-kotlinx-json:$ktorVersion"
+
+    //Splash Screen
+    //implementation 'androidx.core:core-splashscreen:1.0.1'
+
+}

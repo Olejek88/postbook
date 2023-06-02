@@ -1,0 +1,50 @@
+buildscript {
+    ext {
+        // Kotlin dependency
+        kotlinVersion = '1.8.21'
+
+        // AndroidX dependencies
+        supportLibsVersion = '1.0.0'
+        appcompatVersion = '1.2.0'
+        materialVersion = '1.2.0-alpha02'
+
+        // Test dependencies
+        junitVersion = '4.13.2'
+        espressoVersion = '3.5.1'
+        mockitoVersion = '2.19.0'
+        androidKTXVersion = '2.7.0-alpha01'
+
+        // Image libraries dependencies
+        circleimageviewVersion = '3.1.0'
+
+        runnerVersion = '1.1.2'
+        runnerRulesVersion = '1.3.0'
+        annotationVersion = '1.1.0'
+
+        coroutinesVersion = '1.7.1'
+        composeVersion = '1.5.0-beta01'
+        activityComposeVersion = '1.7.0-alpha03'
+        hiltVersion = '2.44.2'
+        ktorVersion = '2.3.0'
+    }
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.1'
+        classpath 'com.google.gms:google-services:4.3.15'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.21"
+        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3'
+    }
+
+}
+
+plugins {
+    id("com.google.dagger.hilt.android") version "2.44" apply false
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
