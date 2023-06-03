@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -122,10 +123,15 @@ dependencies {
     implementation "io.ktor:ktor-client-logging:$ktorVersion"
     implementation "io.ktor:ktor-client-serialization:$ktorVersion"
     implementation "io.ktor:ktor-client-content-negotiation:$ktorVersion"
+    implementation "io.ktor:ktor-client-android:$ktorVersion"
     implementation "io.ktor:ktor-serialization-kotlinx-json:$ktorVersion"
 
     // Paging
     implementation "androidx.paging:paging-compose:1.0.0-alpha20"
+
+    // Serialisation
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0"
 
     //Splash Screen
     //implementation 'androidx.core:core-splashscreen:1.0.1'

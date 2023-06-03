@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Postbook</string>
+    <string name="hidePassword">Hide password</string>
+    <string name="showPassword">Show password</string>
+    <string name="OK">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="login">Login</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="user_id">User ID</string>
+    <string name="wrong_user_id">Wrong user Id</string>
 </resources>
