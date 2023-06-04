@@ -13,6 +13,6 @@ class ImplKtorService(
 ) : AbstractKtorService() {
     override suspend fun getUser(id: Int): UserDTO = httpClient.get("$baseUrl/${EndPoints.USERS}/${id}") {}.body()
     override suspend fun getPosts(): List<PostDTO> = httpClient.get("$baseUrl/${EndPoints.POSTS}") {}.body()
-    override suspend fun getComments(postId: Int): List<CommentDTO> = httpClient.get("$baseUrl/${EndPoints.COMMENTS}/${postId}") {}.body()
+    override suspend fun getComments(postId: Int): List<CommentDTO> = httpClient.get("$baseUrl/${EndPoints.COMMENTS}/${postId}/comments") {}.body()
     override suspend fun getPost(id: Int): PostDTO = httpClient.get("$baseUrl/${EndPoints.POSTS}/${id}") {}.body()
 }

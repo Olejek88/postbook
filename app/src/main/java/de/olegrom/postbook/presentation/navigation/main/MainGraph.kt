@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import de.olegrom.postbook.presentation.ui.login.LoginScreen
+import de.olegrom.postbook.presentation.ui.posts.PostScreen
 import de.olegrom.postbook.presentation.ui.posts.PostsScreen
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -51,6 +52,10 @@ fun MainGraph(
         }
         composable(Screen.Posts.route) {
             PostsScreen(modifier, navController)
+        }
+        composable(Screen.Post.route) {
+            val postId = it.arguments?.getString("postId") ?: "1"
+            PostScreen(modifier, postId.toInt())
         }
     }
 }

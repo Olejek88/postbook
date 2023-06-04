@@ -11,6 +11,12 @@ data class CommentDTO(
     var email: String = ""
 )
 
+fun List<CommentDTO>.asDomainModels(): List<CommentDomainModel> {
+    return this.map {
+        it.asDomainModel()
+    }
+}
+
 fun CommentDTO.asDomainModel(): CommentDomainModel {
     return CommentDomainModel(
             id = this.id,

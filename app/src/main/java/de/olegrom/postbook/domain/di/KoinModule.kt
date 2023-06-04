@@ -4,6 +4,7 @@ import de.olegrom.postbook.data.remote.service.AbstractKtorService
 import de.olegrom.postbook.data.remote.service.ImplKtorService
 import de.olegrom.postbook.data.repository.AbstractRepository
 import de.olegrom.postbook.data.repository.ImplRepository
+import de.olegrom.postbook.domain.usecase.GetCommentsUseCase
 import de.olegrom.postbook.domain.usecase.GetPostUseCase
 import de.olegrom.postbook.domain.usecase.GetPostsUseCase
 import de.olegrom.postbook.domain.usecase.GetUserUseCase
@@ -84,6 +85,9 @@ fun getUseCaseModule() = module {
     single {
         GetPostUseCase(get())
     }
+    single {
+        GetCommentsUseCase(get())
+    }
 }
 
 fun getViewModelsModule() = module {
@@ -94,7 +98,7 @@ fun getViewModelsModule() = module {
         LoginViewModel(get())
     }
     viewModel {
-        PostsViewModel(get(), get())
+        PostsViewModel(get(), get(), get())
     }
 }
 

@@ -2,6 +2,7 @@ package de.olegrom.postbook.presentation.ui.posts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.olegrom.postbook.domain.usecase.GetCommentsUseCase
 import de.olegrom.postbook.domain.usecase.GetPostUseCase
 import de.olegrom.postbook.domain.usecase.GetPostsUseCase
 import de.olegrom.postbook.domain.util.asResult
@@ -12,14 +13,25 @@ import kotlinx.coroutines.launch
 
 class PostsViewModel(
     private val getPostUseCase: GetPostUseCase,
-    private val getPostsUseCase: GetPostsUseCase
+    private val getPostsUseCase: GetPostsUseCase,
+    private val getCommentsUseCase: GetCommentsUseCase
 ) : ViewModel() {
-    private val _state = MutableStateFlow<ScreenState>(ScreenState.Idle)
-    var state = _state.asStateFlow()
+    private val _postsState = MutableStateFlow<ScreenState>(ScreenState.Idle)
+    var postsState = _postsState.asStateFlow()
+    private val _commentsState = MutableStateFlow<ScreenState>(ScreenState.Idle)
+    var commentsState = _commentsState.asStateFlow()
     fun getPostById(postId: Int) {
         viewModelScope.launch {
             getPostUseCase.invoke(id = postId).asResult().collectLatest { result ->
-                setState(result)
+                setState(result, _postsState)
+            }
+        }
+    }
+
+    fun getCommentsByPostId(postId: Int) {
+        viewModelScope.launch {
+            getCommentsUseCase.invoke(postId).asResult().collectLatest { result ->
+                setState(result, _commentsState)
             }
         }
     }
@@ -27,26 +39,26 @@ class PostsViewModel(
     fun getPostsByUserId(userId: Int) {
         viewModelScope.launch {
             getPostsUseCase.invoke(userId).asResult().collectLatest { result ->
-                setState(result)
+                setState(result, _postsState)
             }
         }
     }
 
-    private fun setState(result: Result<Any>) {
+    private fun setState(result: Result<Any>, state: MutableStateFlow<ScreenState>) {
         when (result) {
             is Result.Error -> {
-                _state.update {
+                state.update {
                     ScreenState.Error(result.exception.message)
                 }
             }
             is Result.Idle -> {}
             is Result.Loading -> {
-                _state.update {
+                state.update {
                     ScreenState.Loading
                 }
             }
             is Result.Success -> {
-                _state.update {
+                state.update {
                     ScreenState.Success(result.data)
                 }
             }

@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -45,6 +46,8 @@ fun MainScreen(navController: NavHostController = rememberAnimatedNavController(
                         Text(
                             title,
                             textAlign = TextAlign.Center,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.fillMaxWidth().testTag(TestTag.appBarTitle),
                             style = MaterialTheme.typography.titleMedium
                         )
