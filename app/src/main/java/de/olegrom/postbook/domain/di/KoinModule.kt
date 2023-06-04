@@ -4,9 +4,12 @@ import de.olegrom.postbook.data.remote.service.AbstractKtorService
 import de.olegrom.postbook.data.remote.service.ImplKtorService
 import de.olegrom.postbook.data.repository.AbstractRepository
 import de.olegrom.postbook.data.repository.ImplRepository
+import de.olegrom.postbook.domain.usecase.GetPostUseCase
+import de.olegrom.postbook.domain.usecase.GetPostsUseCase
 import de.olegrom.postbook.domain.usecase.GetUserUseCase
 import de.olegrom.postbook.presentation.ui.login.LoginViewModel
 import de.olegrom.postbook.presentation.ui.main.TopAppBarViewModel
+import de.olegrom.postbook.presentation.ui.posts.PostsViewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
@@ -75,6 +78,12 @@ fun getUseCaseModule() = module {
     single {
         GetUserUseCase(get())
     }
+    single {
+        GetPostsUseCase(get())
+    }
+    single {
+        GetPostUseCase(get())
+    }
 }
 
 fun getViewModelsModule() = module {
@@ -83,6 +92,9 @@ fun getViewModelsModule() = module {
     }
     viewModel {
         LoginViewModel(get())
+    }
+    viewModel {
+        PostsViewModel(get(), get())
     }
 }
 
@@ -97,12 +109,14 @@ fun createHttpClient(
         install(ContentNegotiation) {
             json(json)
         }
+/*
         if (enableNetworkLogs) {
             install(Logging) {
                 logger = Logger.SIMPLE
                 level = LogLevel.ALL
             }
         }
+*/
     }
 
 fun createJson() = Json { isLenient = true; ignoreUnknownKeys = true }

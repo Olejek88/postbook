@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -22,9 +21,9 @@ import de.olegrom.postbook.presentation.ui.CommonButton
 import org.koin.androidx.compose.getViewModel
 import de.olegrom.postbook.R
 import de.olegrom.postbook.domain.domain_model.UserDomainModel
+import de.olegrom.postbook.presentation.navigation.main.Screen
 import de.olegrom.postbook.presentation.ui.common.ErrorWidget
 import de.olegrom.postbook.presentation.ui.main.ScreenState
-import timber.log.Timber
 
 @Composable
 fun LoginScreen(
@@ -77,7 +76,7 @@ fun LoginScreen(
                 ScreenState.Loading -> {}
                 is ScreenState.Success -> {
                     val user = (state as ScreenState.Success).entity as UserDomainModel
-                    // TODO navigate to posts
+                    navController.navigate(Screen.Posts.route)
                 }
             }
         }

@@ -29,7 +29,7 @@ fun MainScreen(navController: NavHostController = rememberAnimatedNavController(
         val listener = NavController.OnDestinationChangedListener { controller, _, _ ->
             canPop = false
             controller.currentBackStackEntry?.destination?.route?.let {
-                canPop = (it == Screen.Posts.route)
+                canPop = (it == Screen.Post.route)
             }
         }
         navController.addOnDestinationChangedListener(listener)

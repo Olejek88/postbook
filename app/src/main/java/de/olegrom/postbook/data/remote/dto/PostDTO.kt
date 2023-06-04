@@ -10,6 +10,12 @@ data class PostDTO(
     var body: String = ""
 )
 
+fun List<PostDTO>.asDomainModels(): List<PostDomainModel> {
+    return this.map {
+        it.asDomainModel()
+    }
+}
+
 fun PostDTO.asDomainModel(): PostDomainModel {
     return PostDomainModel(
             id = this.id,

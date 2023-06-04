@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import de.olegrom.postbook.presentation.ui.login.LoginScreen
+import de.olegrom.postbook.presentation.ui.posts.PostsScreen
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.composable(
@@ -49,7 +50,7 @@ fun MainGraph(
             LoginScreen(modifier, navController)
         }
         composable(Screen.Posts.route) {
-            //FilmsScreen(modifier, navController, FilmsPagedViewModel(getViewModel()))
+            PostsScreen(modifier, navController)
         }
     }
 }
