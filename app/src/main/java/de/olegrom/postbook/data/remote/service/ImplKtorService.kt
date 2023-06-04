@@ -1,5 +1,7 @@
 package de.olegrom.postbook.data.remote.service
 
+import de.olegrom.postbook.data.remote.dto.CommentDTO
+import de.olegrom.postbook.data.remote.dto.PostDTO
 import de.olegrom.postbook.data.remote.dto.UserDTO
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -10,6 +12,7 @@ class ImplKtorService(
     private val baseUrl: String
 ) : AbstractKtorService() {
     override suspend fun getUser(id: Int): UserDTO = httpClient.get("$baseUrl/${EndPoints.USERS}/${id}") {}.body()
-    //override suspend fun getPosts(page: Int): StarshipsDTO = httpClient.get("$baseUrl/${EndPoints.STARSHIPS}/?page=${page}") {}.body()
-    //override suspend fun getPost(id: String): FilmDTO = httpClient.get("$baseUrl/${EndPoints.FILMS}/${id}") {}.body()
+    override suspend fun getPosts(userId: Int): List<PostDTO> = httpClient.get("$baseUrl/${EndPoints.POSTS}/${userId}") {}.body()
+    override suspend fun getComments(postId: Int): List<CommentDTO> = httpClient.get("$baseUrl/${EndPoints.COMMENTS}/${postId}") {}.body()
+    override suspend fun getPost(id: Int): PostDTO = httpClient.get("$baseUrl/${EndPoints.POSTS}/${id}") {}.body()
 }
