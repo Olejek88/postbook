@@ -10,7 +10,6 @@ class GetUserUseCase(
 ) {
     operator fun invoke(id: Int) = flow {
         val response = repository.getUser(id)?.asDomainModel()
-        Timber.i("user = ${response}")
         emit(response)
     }
 }
