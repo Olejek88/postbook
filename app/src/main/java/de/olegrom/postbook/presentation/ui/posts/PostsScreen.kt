@@ -63,10 +63,7 @@ fun PageContent(
             count = posts.size,
         ) { index ->
             val item = posts[index]
-            PostCard(
-                item.title,
-                item.body
-            ) {
+            PostCard(item) {
                 navController.navigate(
                     Screen.Post.route.replace("{postId}", item.id.toString())
                 )

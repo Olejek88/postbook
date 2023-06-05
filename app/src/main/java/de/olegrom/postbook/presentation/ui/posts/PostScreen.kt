@@ -48,7 +48,7 @@ fun PostScreen(
             is ScreenState.Success -> {
                 val post = (postsState as ScreenState.Success).entity as PostDomainModel
                 topAppBarViewModel.title.update { post.title }
-                PostCard(title = post.title, subtitle = post.body)
+                PostCard(post)
             }
         }
         when (commentsState) {

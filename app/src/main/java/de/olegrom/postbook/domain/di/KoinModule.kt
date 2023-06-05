@@ -1,5 +1,6 @@
 package de.olegrom.postbook.domain.di
 
+import de.olegrom.postbook.data.preferences.SharedPreferenceHelper
 import de.olegrom.postbook.data.remote.service.AbstractKtorService
 import de.olegrom.postbook.data.remote.service.ImplKtorService
 import de.olegrom.postbook.data.repository.AbstractRepository
@@ -10,6 +11,7 @@ import de.olegrom.postbook.domain.usecase.GetPostsUseCase
 import de.olegrom.postbook.domain.usecase.GetUserUseCase
 import de.olegrom.postbook.presentation.ui.login.LoginViewModel
 import de.olegrom.postbook.presentation.ui.main.TopAppBarViewModel
+import de.olegrom.postbook.presentation.ui.posts.FavouritesViewModel
 import de.olegrom.postbook.presentation.ui.posts.PostsViewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
@@ -23,6 +25,7 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import org.koin.androidx.viewmodel.dsl.viewModel
 import io.ktor.client.engine.android.*
+import org.koin.android.ext.koin.androidContext
 
 fun initKoin(
     enableNetworkLogs: Boolean = false,
@@ -64,6 +67,8 @@ fun getDateModule(enableNetworkLogs: Boolean, baseUrl: String) = module {
 
     single { createJson() }
 
+    single { SharedPreferenceHelper(androidContext()) }
+
     single {
         createHttpClient(
             get(),
@@ -99,6 +104,9 @@ fun getViewModelsModule() = module {
     }
     viewModel {
         PostsViewModel(get(), get(), get())
+    }
+    viewModel {
+        FavouritesViewModel(get())
     }
 }
 
