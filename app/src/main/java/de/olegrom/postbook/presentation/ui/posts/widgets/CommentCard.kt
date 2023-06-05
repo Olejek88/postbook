@@ -26,7 +26,7 @@ fun CommentCard(
             .fillMaxWidth()
             .padding(start = 20.dp)
             .clip(shape = RoundedCornerShape(size = 10.dp))
-            .testTag(TestTag.listElement),
+            .testTag(TestTag.commentCard),
     ) {
         Row(
             Modifier

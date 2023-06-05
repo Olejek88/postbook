@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -24,6 +25,7 @@ import de.olegrom.postbook.domain.domain_model.UserDomainModel
 import de.olegrom.postbook.presentation.navigation.main.Screen
 import de.olegrom.postbook.presentation.ui.common.ErrorWidget
 import de.olegrom.postbook.presentation.ui.main.ScreenState
+import de.olegrom.postbook.presentation.utils.TestTag
 
 @Composable
 fun LoginScreen(
@@ -33,7 +35,7 @@ fun LoginScreen(
     topAppBarViewModel: TopAppBarViewModel = getViewModel()
 ) {
     val state by viewModel.state.collectAsState()
-    topAppBarViewModel.title.update { "Login" }
+    topAppBarViewModel.title.update { stringResource(id = R.string.login) }
     var id by remember { mutableStateOf("") }
     var isShowAlert by remember { mutableStateOf(false) }
     var alertText by remember { mutableStateOf("") }
@@ -59,6 +61,7 @@ fun LoginScreen(
                 text = stringResource(R.string.login),
                 enabled = id.isNotEmpty() && id.isDigitsOnly(),
                 modifier = Modifier
+                    .testTag(TestTag.loginButton)
                     .padding(vertical = 10.dp)
                     .fillMaxWidth(),
                 onClick = {

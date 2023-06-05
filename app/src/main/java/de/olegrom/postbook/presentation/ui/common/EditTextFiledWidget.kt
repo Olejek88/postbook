@@ -13,9 +13,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import de.olegrom.postbook.presentation.utils.TestTag
 
 @Composable
 fun EditTextFieldWidget(
@@ -35,7 +37,7 @@ fun EditTextFieldWidget(
             .padding(horizontal = 5.dp)
     ) {
         OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.testTag(TestTag.inputField).fillMaxWidth(),
             shape = RoundedCornerShape(5.dp),
             value = text,
             label = { Text(text = title) },

@@ -30,7 +30,7 @@ fun PostCard(
             .fillMaxWidth()
             .clickable { itemClick() }
             .clip(shape = RoundedCornerShape(size = 10.dp))
-            .testTag(TestTag.listElement),
+            .testTag(TestTag.postCard),
     ) {
         Row(
             Modifier
