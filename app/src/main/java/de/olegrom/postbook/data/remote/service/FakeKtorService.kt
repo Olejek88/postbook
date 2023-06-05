@@ -5,7 +5,7 @@ import de.olegrom.postbook.data.remote.dto.PostDTO
 import de.olegrom.postbook.data.remote.dto.UserDTO
 
 class FakeKtorService : AbstractKtorService() {
-    val mockedPost = PostDTO(1, 1, "Post title", "Post text")
+    private val mockedPost = PostDTO(1, 1, "Post title", "Post text")
 
     override suspend fun getUser(id: Int): UserDTO {
         return UserDTO(1, "Leanne Graham", "Bret", "Sincere@april.biz")

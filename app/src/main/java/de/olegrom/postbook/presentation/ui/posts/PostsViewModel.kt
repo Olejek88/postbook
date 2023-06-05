@@ -2,6 +2,7 @@ package de.olegrom.postbook.presentation.ui.posts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.olegrom.postbook.data.preferences.SharedPreferenceHelper
 import de.olegrom.postbook.domain.usecase.GetCommentsUseCase
 import de.olegrom.postbook.domain.usecase.GetPostUseCase
 import de.olegrom.postbook.domain.usecase.GetPostsUseCase
@@ -14,7 +15,8 @@ import kotlinx.coroutines.launch
 class PostsViewModel(
     private val getPostUseCase: GetPostUseCase,
     private val getPostsUseCase: GetPostsUseCase,
-    private val getCommentsUseCase: GetCommentsUseCase
+    private val getCommentsUseCase: GetCommentsUseCase,
+    private val preferences: SharedPreferenceHelper
 ) : ViewModel() {
     private val _postsState = MutableStateFlow<ScreenState>(ScreenState.Idle)
     var postsState = _postsState.asStateFlow()
@@ -36,7 +38,8 @@ class PostsViewModel(
         }
     }
 
-    fun getPostsByUserId(userId: Int) {
+    fun getAllPosts() {
+        val userId = preferences.getUserId()
         viewModelScope.launch {
             getPostsUseCase.invoke(userId).asResult().collectLatest { result ->
                 setState(result, _postsState)

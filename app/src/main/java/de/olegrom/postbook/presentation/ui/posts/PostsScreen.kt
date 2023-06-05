@@ -28,7 +28,7 @@ fun PostsScreen(
 ) {
     val state by viewModel.postsState.collectAsState()
     topAppBarViewModel.title.update { "Posts" }
-    viewModel.getPostsByUserId(1)
+    viewModel.getAllPosts()
     Column(
         modifier = Modifier
             .padding(10.dp)

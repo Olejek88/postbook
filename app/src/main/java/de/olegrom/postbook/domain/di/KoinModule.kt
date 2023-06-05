@@ -100,10 +100,10 @@ fun getViewModelsModule() = module {
         TopAppBarViewModel()
     }
     viewModel {
-        LoginViewModel(get())
+        LoginViewModel(get(), get())
     }
     viewModel {
-        PostsViewModel(get(), get(), get())
+        PostsViewModel(get(), get(), get(), get())
     }
     viewModel {
         FavouritesViewModel(get())

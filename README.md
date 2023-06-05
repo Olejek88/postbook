@@ -7,7 +7,7 @@ What are inside?
 <ul>
 <li> Jetpack Compose</li>
 <li> Ktor Framework</li>
-<li> Hilt dependencies injection Framework</li>
+<li> Koin dependencies injection Framework</li>
 <li> Material3</li>
 <li> Coil</li>
 </ul>
@@ -35,8 +35,8 @@ To run your application on an Android emulator:
 <br/>In the list of run configurations, select app.
 <br/>Choose your virtual device and click Run
 
-<p><img src="https://github.com/Olejek88/starwars/blob/master/screen1.png" width="50%">
-<img src="https://github.com/Olejek88/starwars/blob/master/screen2.png" width="50%"></p>
+<p><img src="https://github.com/Olejek88/postbook/blob/master/screen1.png" width="50%">
+<img src="https://github.com/Olejek88/postbook/blob/master/screen2.png" width="50%"></p>
 
 # Troubleshooting
 TODO
