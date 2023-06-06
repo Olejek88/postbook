@@ -4,6 +4,7 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,36 +29,26 @@ fun PostScreen(
     val commentsState by viewModel.commentsState.collectAsState()
     viewModel.getPostById(postId)
     viewModel.getCommentsByPostId(postId)
-    Column(
-        modifier = modifier
-            .padding(10.dp)
-            .scrollable(
-                orientation = Orientation.Vertical,
-                state = rememberScrollableState { delta -> delta }
-            )
-            .fillMaxSize(),
+    LazyColumn(modifier = modifier.padding(10.dp).fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        when (postState) {
-            is PostState.Error -> ErrorWidget((postState as PostState.Error).errorMessage)
-            is PostState.Idle -> {}
-            is PostState.Loading -> PageLoadingView(modifier)
-            is PostState.Success -> {
-                val post = (postState as PostState.Success).post
-                topAppBarViewModel.title.update { post.title }
-                PostCard(post)
+        item {
+            when (postState) {
+                is PostState.Error -> ErrorWidget((postState as PostState.Error).errorMessage)
+                is PostState.Idle -> {}
+                is PostState.Loading -> PageLoadingView(modifier)
+                is PostState.Success -> {
+                    val post = (postState as PostState.Success).post
+                    topAppBarViewModel.title.update { post.title }
+                    PostCard(post, maxTextLines = 30)
+                }
             }
         }
-        when (commentsState) {
-            is CommentsState.Error -> {}
-            is CommentsState.Idle -> {}
-            is CommentsState.Loading -> PageLoadingView(modifier)
-            is CommentsState.Success -> {
-                val comments = (commentsState as CommentsState.Success).comments
-                comments.forEach {
-                    CommentCard(it)
-                }
+        if (commentsState is CommentsState.Success) {
+            val comments = (commentsState as CommentsState.Success).comments
+            items(comments.size) {
+                CommentCard(comments[it])
             }
         }
     }

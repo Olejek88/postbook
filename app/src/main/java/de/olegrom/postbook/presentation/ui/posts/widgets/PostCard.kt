@@ -29,6 +29,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun PostCard(
     post: PostDomainModel,
+    maxTextLines: Int = 3,
     favouritesViewModel: FavouritesViewModel = getViewModel(),
     itemClick: () -> Unit = {}
 ) {
@@ -58,7 +59,6 @@ fun PostCard(
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onSecondaryContainer
                         ),
-                        maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
                     Icon(
@@ -74,7 +74,7 @@ fun PostCard(
                 Text(
                     text = post.body,
                     style = MaterialTheme.typography.bodyMedium,
-                    maxLines = 3,
+                    maxLines = maxTextLines,
                     overflow = TextOverflow.Ellipsis
                 )
             }

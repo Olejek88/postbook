@@ -20,16 +20,8 @@ To work with this app, you need the following:
 <li>Android Studio</li>
 </ul>
 
-## Check your environment
-
-
-## App structure
-
-This is an
-
 ## Run the application
 
-### Android
 To run your application on an Android emulator:
 <br/>Ensure you have an Android virtual device available. Otherwise, create one.
 <br/>In the list of run configurations, select app.
@@ -38,5 +30,3 @@ To run your application on an Android emulator:
 <p><img src="https://github.com/Olejek88/postbook/blob/master/screen1.png" width="50%">
 <img src="https://github.com/Olejek88/postbook/blob/master/screen2.png" width="50%"></p>
 
-# Troubleshooting
-TODO

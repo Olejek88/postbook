@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,7 +33,7 @@ fun CommentCard(
         Row(
             Modifier
                 .fillMaxWidth()
-                .background(color = MaterialTheme.colorScheme.secondaryContainer)
+                .background(color = MaterialTheme.colorScheme.tertiaryContainer)
                 .padding(10.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalAlignment = Alignment.Top
@@ -56,8 +57,9 @@ fun CommentCard(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = comment.email,
-                    style = MaterialTheme.typography.bodySmall,
+                    text = "Email: ${comment.email}",
+                    style = MaterialTheme.typography.bodySmall
+                        .copy(fontStyle = FontStyle.Italic, color = MaterialTheme.colorScheme.error),
                 )
             }
         }
@@ -67,5 +69,5 @@ fun CommentCard(
 @Preview
 @Composable
 fun CommentCardPreview() {
-    CommentCard(CommentDomainModel(name="Name", body = "Text"))
+    CommentCard(CommentDomainModel(name="Name", body = "Text", email = "oleg.romanov@mmm.de"))
 }
