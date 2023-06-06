@@ -38,7 +38,6 @@ fun MainScreen(
     val currentFavFilter = remember { mutableStateOf(false) }
     DisposableEffect(navController) {
         val listener = NavController.OnDestinationChangedListener { controller, _, _ ->
-            canPop = false
             controller.currentBackStackEntry?.destination?.route?.let {
                 canPop = (it == Screen.Post.route)
                 showFav = (it == Screen.Posts.route)

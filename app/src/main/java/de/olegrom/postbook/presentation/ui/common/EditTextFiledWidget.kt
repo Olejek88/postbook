@@ -45,7 +45,12 @@ fun EditTextFieldWidget(
             shape = RoundedCornerShape(5.dp),
             value = text,
             label = { Text(text = title) },
-            supportingText = { if (supportingText!=null) Text(text = supportingText, style = MaterialTheme.typography.bodySmall) },
+            supportingText = {
+                if (supportingText != null) Text(
+                    text = supportingText,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            },
             onValueChange = {
                 onTextChanged(it)
                 text = it
@@ -53,7 +58,7 @@ fun EditTextFieldWidget(
             keyboardOptions = KeyboardOptions.Default.copy(
                 autoCorrect = true,
                 keyboardType = type,
-                imeAction = if(isLastField==true) ImeAction.Done else ImeAction.Next
+                imeAction = if (isLastField == true) ImeAction.Done else ImeAction.Next
             ),
             keyboardActions = KeyboardActions(
                 onNext = { focusManager.moveFocus(FocusDirection.Down) }
@@ -69,6 +74,11 @@ fun EditTextFieldWidget(
 @Composable
 fun EditTextFieldWidgetPreview() {
     PostBookTheme {
-        EditTextFieldWidget("Sample text", "Subtext", type = KeyboardType.Text, onTextChanged = {})
+        EditTextFieldWidget(
+            "Sample text",
+            "Subtext",
+            type = KeyboardType.Text,
+            onTextChanged = {}
+        )
     }
 }

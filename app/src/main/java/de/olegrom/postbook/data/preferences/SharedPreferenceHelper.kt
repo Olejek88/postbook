@@ -3,7 +3,6 @@ package de.olegrom.postbook.data.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import timber.log.Timber
 
 class SharedPreferenceHelper (context: Context) {
     companion object {

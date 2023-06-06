@@ -34,12 +34,11 @@ fun initKoin(
 ) =
     startKoin {
         appDeclaration()
-        modules(commonModule(enableNetworkLogs = enableNetworkLogs, baseUrl))
+        modules(commonModule(baseUrl))
     }
 
-fun commonModule(enableNetworkLogs: Boolean, baseUrl: String) =
+fun commonModule(baseUrl: String) =
     getUseCaseModule() + getDateModule(
-        enableNetworkLogs,
         baseUrl
     ) + getHelperModule() + getViewModelsModule()
 
@@ -47,7 +46,7 @@ fun getHelperModule() = module {
 
 }
 
-fun getDateModule(enableNetworkLogs: Boolean, baseUrl: String) = module {
+fun getDateModule(baseUrl: String) = module {
     single {
         Android.create()
     }

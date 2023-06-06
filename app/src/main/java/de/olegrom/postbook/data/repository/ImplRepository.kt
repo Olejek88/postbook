@@ -10,7 +10,3 @@ class ImplRepository(
     override suspend fun getComments(postId: Int) = ktorService.getComments(postId)
     override suspend fun getPost(id: Int) = ktorService.getPost(id)
 }
-
-
-
-

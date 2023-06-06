@@ -59,7 +59,8 @@ fun CommentCard(
                 Text(
                     text = "Email: ${comment.email}",
                     style = MaterialTheme.typography.bodySmall
-                        .copy(fontStyle = FontStyle.Italic, color = MaterialTheme.colorScheme.error),
+                        .copy(fontStyle = FontStyle.Italic,
+                            color = MaterialTheme.colorScheme.error),
                 )
             }
         }

@@ -28,7 +28,6 @@ import de.olegrom.postbook.presentation.ui.common.PageLoadingView
 import de.olegrom.postbook.presentation.ui.main.states.LoginState
 import de.olegrom.postbook.presentation.ui.posts.PostsViewModel
 import de.olegrom.postbook.presentation.utils.TestTag
-import timber.log.Timber
 
 @Composable
 fun LoginScreen(
@@ -41,7 +40,7 @@ fun LoginScreen(
     var currentUser by remember { mutableStateOf<UserDomainModel?>(null)}
     val state by viewModel.state.collectAsState()
     topAppBarViewModel.title.update { stringResource(id = R.string.login) }
-    var id by remember { mutableStateOf("") }
+    var userId by remember { mutableStateOf("") }
     var isShowAlert by remember { mutableStateOf(false) }
     var alertText by remember { mutableStateOf("") }
     val wrongUserIdError = stringResource(id = R.string.wrong_user_id)
@@ -52,7 +51,7 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally) {
             EditTextFieldWidget(
                 title = stringResource(R.string.user_id),
-                onTextChanged = { id = it },
+                onTextChanged = { userId = it },
                 type = KeyboardType.Email,
             )
             if (isShowAlert) {
@@ -64,14 +63,14 @@ fun LoginScreen(
             }
             CommonButton(
                 text = stringResource(R.string.login),
-                enabled = id.isNotEmpty() && id.isDigitsOnly(),
+                enabled = userId.isNotEmpty() && userId.isDigitsOnly(),
                 modifier = Modifier
                     .testTag(TestTag.loginButton)
                     .padding(vertical = 10.dp)
                     .fillMaxWidth(),
                 onClick = {
                     try {
-                        viewModel.getUserById(id.toInt())
+                        viewModel.getUserById(userId.toInt())
                     } catch (e: Exception) {
                         isShowAlert = true
                         alertText = wrongUserIdError

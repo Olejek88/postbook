@@ -1,11 +1,13 @@
 package de.olegrom.postbook
 
+import androidx.lifecycle.Observer
 import de.olegrom.postbook.data.remote.service.FakeKtorService
 import de.olegrom.postbook.data.repository.ImplRepository
 import de.olegrom.postbook.domain.usecase.GetCommentsUseCase
 import de.olegrom.postbook.domain.usecase.GetPostUseCase
 import de.olegrom.postbook.domain.usecase.GetPostsUseCase
 import de.olegrom.postbook.presentation.ui.main.states.CommentsState
+import de.olegrom.postbook.presentation.ui.main.states.LoginState
 import org.junit.Before
 import org.junit.Test
 import de.olegrom.postbook.presentation.ui.main.states.PostState
@@ -17,11 +19,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.MatcherAssert.assertThat
 
 class PostsViewModelTest {
     private val viewModel = PostsViewModel(

@@ -53,7 +53,7 @@ android {
 dependencies {
     implementation "androidx.compose.ui:ui:$composeVersion"
 
-    // Images
+    // Images loading
     implementation "io.coil-kt:coil-compose:2.2.2"
 
     // Coroutines
@@ -108,9 +108,11 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$composeVersion"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$composeVersion"
     androidTestImplementation "androidx.test:runner:1.5.2"
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
-    testImplementation("androidx.arch.core:core-testing:2.2.0")
-    testImplementation("androidx.test:core:1.5.0")
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$composeVersion"
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+    testImplementation "androidx.test:core:1.5.0"
+    testImplementation "io.mockk:mockk:1.13.4"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1"
 
     // Ktor
     implementation "io.ktor:ktor-client-core:$ktorVersion"
@@ -121,12 +123,6 @@ dependencies {
     implementation "io.ktor:ktor-client-android:$ktorVersion"
     implementation "io.ktor:ktor-serialization-kotlinx-json:$ktorVersion"
 
-    // Paging
-    implementation "androidx.paging:paging-compose:1.0.0-alpha20"
-
     // Serialisation
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.0"
-
-    //Splash Screen
-    //implementation 'androidx.core:core-splashscreen:1.0.1'
 }
