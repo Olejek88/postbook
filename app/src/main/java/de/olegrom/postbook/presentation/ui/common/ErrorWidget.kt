@@ -11,7 +11,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ErrorWidget(errorText: String) {
@@ -37,4 +39,10 @@ fun ErrorWidget(errorText: String) {
             style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.error)
         )
     }
+}
+
+@Preview
+@Composable
+fun ErrorWidget() {
+    ErrorWidget("Sample text")
 }

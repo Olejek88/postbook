@@ -17,9 +17,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.olegrom.postbook.presentation.utils.TestTag
 import de.olegrom.postbook.R
+import de.olegrom.postbook.domain.domain_model.CommentDomainModel
 import de.olegrom.postbook.domain.domain_model.PostDomainModel
 import de.olegrom.postbook.presentation.ui.posts.FavouritesViewModel
 import org.koin.androidx.compose.getViewModel
@@ -78,4 +80,10 @@ fun PostCard(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun PostCardPreview() {
+    PostCard(PostDomainModel())
 }

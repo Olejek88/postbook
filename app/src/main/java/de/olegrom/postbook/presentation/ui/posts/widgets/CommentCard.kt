@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.olegrom.postbook.domain.domain_model.CommentDomainModel
 import de.olegrom.postbook.presentation.utils.TestTag
@@ -61,4 +62,10 @@ fun CommentCard(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun CommentCardPreview() {
+    CommentCard(CommentDomainModel(name="Name", body = "Text"))
 }

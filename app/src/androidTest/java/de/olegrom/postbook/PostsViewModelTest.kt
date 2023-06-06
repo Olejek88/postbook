@@ -17,8 +17,11 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
 
 class PostsViewModelTest {
     private val viewModel = PostsViewModel(
@@ -34,12 +37,11 @@ class PostsViewModelTest {
     }
 
     @Test
-    fun allPostsTest() = runBlockingTest {
+    fun allPostsTest() = runTest {
         setUp()
         launch {
             viewModel.getAllPosts(false)
-            assertThat(viewModel.postsState.value, `is`(PostsState.Success))
-            //assertTrue(viewModel.postsState.value is PostsState.Success)
+            assertTrue(viewModel.postsState.value is PostsState.Success)
         }
     }
 
