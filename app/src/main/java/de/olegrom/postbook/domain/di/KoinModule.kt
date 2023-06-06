@@ -73,7 +73,6 @@ fun getDateModule(enableNetworkLogs: Boolean, baseUrl: String) = module {
         createHttpClient(
             get(),
             get(),
-            enableNetworkLogs = enableNetworkLogs
         )
     }
 
@@ -85,7 +84,7 @@ fun getUseCaseModule() = module {
         GetUserUseCase(get())
     }
     single {
-        GetPostsUseCase(get())
+        GetPostsUseCase(get(), get())
     }
     single {
         GetPostUseCase(get())
@@ -102,18 +101,17 @@ fun getViewModelsModule() = module {
     viewModel {
         LoginViewModel(get(), get())
     }
-    viewModel {
+    single {
         PostsViewModel(get(), get(), get(), get())
     }
-    viewModel {
+    single {
         FavouritesViewModel(get())
     }
 }
 
 fun createHttpClient(
     httpClientEngine: HttpClientEngine,
-    json: Json,
-    enableNetworkLogs: Boolean
+    json: Json
 ) =
     HttpClient(httpClientEngine) {
 
@@ -121,14 +119,6 @@ fun createHttpClient(
         install(ContentNegotiation) {
             json(json)
         }
-/*
-        if (enableNetworkLogs) {
-            install(Logging) {
-                logger = Logger.SIMPLE
-                level = LogLevel.ALL
-            }
-        }
-*/
     }
 
 fun createJson() = Json { isLenient = true; ignoreUnknownKeys = true }

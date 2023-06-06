@@ -1,14 +1,13 @@
 package de.olegrom.postbook
 
+import de.olegrom.postbook.data.preferences.SharedPreferenceHelper
 import de.olegrom.postbook.data.remote.service.FakeKtorService
 import de.olegrom.postbook.data.repository.ImplRepository
-import de.olegrom.postbook.domain.domain_model.UserDomainModel
 import de.olegrom.postbook.domain.usecase.GetUserUseCase
 import de.olegrom.postbook.presentation.ui.login.LoginViewModel
 import org.junit.Before
 import org.junit.Test
-import org.junit.Rule
-import de.olegrom.postbook.presentation.ui.main.ScreenState
+import de.olegrom.postbook.presentation.ui.main.states.LoginState
 import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,6 +16,7 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import org.koin.android.ext.koin.androidContext
 
 class LoginViewModelTest {
     private val viewModel = LoginViewModel(GetUserUseCase(ImplRepository(FakeKtorService())))
@@ -32,16 +32,15 @@ class LoginViewModelTest {
         setUp()
         launch {
             viewModel.getUserById(1)
-            val state : FlowCollector<ScreenState> = FlowCollector {
+            val state : FlowCollector<LoginState> = FlowCollector {
                 println(it)
-                if (it is ScreenState.Success) {
-                    val entity = (it).entity
-                    assertTrue(entity is UserDomainModel)
-                    assertTrue((entity as UserDomainModel).id == 1)
+                if (it is LoginState.Success) {
+                    val entity = (it).user
+                    assertTrue(entity.id == 1)
                     assertTrue((entity).name == "Leanne Graham")
                     cancel()
                 }
-                if (it is ScreenState.Error) {
+                if (it is LoginState.Error) {
                     assertTrue(false)
                     cancel()
                 }

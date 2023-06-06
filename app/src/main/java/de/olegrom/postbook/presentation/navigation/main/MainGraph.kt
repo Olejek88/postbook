@@ -10,8 +10,11 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import de.olegrom.postbook.presentation.ui.login.LoginScreen
+import de.olegrom.postbook.presentation.ui.main.TopAppBarViewModel
 import de.olegrom.postbook.presentation.ui.posts.PostScreen
 import de.olegrom.postbook.presentation.ui.posts.PostsScreen
+import de.olegrom.postbook.presentation.ui.posts.PostsViewModel
+import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.composable(
@@ -40,8 +43,10 @@ fun NavGraphBuilder.composable(
 @Composable
 fun MainGraph(
     navController: NavHostController,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
+    val postsViewModel: PostsViewModel = getViewModel()
+    val topAppBarViewModel: TopAppBarViewModel = getViewModel()
     AnimatedNavHost(
         navController = navController,
         route = Graph.MAIN,
@@ -51,11 +56,11 @@ fun MainGraph(
             LoginScreen(modifier, navController)
         }
         composable(Screen.Posts.route) {
-            PostsScreen(modifier, navController)
+            PostsScreen(modifier, navController, postsViewModel, topAppBarViewModel)
         }
         composable(Screen.Post.route) {
             val postId = it.arguments?.getString("postId") ?: "1"
-            PostScreen(modifier, postId.toInt())
+            PostScreen(modifier, postId.toInt(), postsViewModel, topAppBarViewModel)
         }
     }
 }

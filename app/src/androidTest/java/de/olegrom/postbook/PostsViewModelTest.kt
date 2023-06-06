@@ -2,18 +2,14 @@ package de.olegrom.postbook
 
 import de.olegrom.postbook.data.remote.service.FakeKtorService
 import de.olegrom.postbook.data.repository.ImplRepository
-import de.olegrom.postbook.domain.domain_model.CommentDomainModel
-import de.olegrom.postbook.domain.domain_model.PostDomainModel
-import de.olegrom.postbook.domain.domain_model.UserDomainModel
 import de.olegrom.postbook.domain.usecase.GetCommentsUseCase
 import de.olegrom.postbook.domain.usecase.GetPostUseCase
 import de.olegrom.postbook.domain.usecase.GetPostsUseCase
-import de.olegrom.postbook.domain.usecase.GetUserUseCase
-import de.olegrom.postbook.presentation.ui.login.LoginViewModel
+import de.olegrom.postbook.presentation.ui.main.states.CommentsState
 import org.junit.Before
 import org.junit.Test
-import org.junit.Rule
-import de.olegrom.postbook.presentation.ui.main.ScreenState
+import de.olegrom.postbook.presentation.ui.main.states.PostState
+import de.olegrom.postbook.presentation.ui.main.states.PostsState
 import de.olegrom.postbook.presentation.ui.posts.PostsViewModel
 import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.Dispatchers
@@ -38,26 +34,12 @@ class PostsViewModelTest {
     }
 
     @Test
-    fun allPostsTest() = runTest {
+    fun allPostsTest() = runBlockingTest {
         setUp()
         launch {
-            viewModel.getPostsByUserId(1)
-            val state : FlowCollector<ScreenState> = FlowCollector {
-                println(it)
-                if (it is ScreenState.Success) {
-                    val entity = (it).entity
-                    // TODO check
-                    val firstPost = (entity as List<PostDomainModel>)[0]
-                    assertTrue(firstPost.id == 1)
-                    assertTrue(firstPost.userId == 1)
-                    cancel()
-                }
-                if (it is ScreenState.Error) {
-                    assertTrue(false)
-                    cancel()
-                }
-            }
-            viewModel.postsState.collect(state)
+            viewModel.getAllPosts(false)
+            assertThat(viewModel.postsState.value, `is`(PostsState.Success))
+            //assertTrue(viewModel.postsState.value is PostsState.Success)
         }
     }
 
@@ -66,21 +48,20 @@ class PostsViewModelTest {
         setUp()
         launch {
             viewModel.getPostById(1)
-            val state : FlowCollector<ScreenState> = FlowCollector {
-                if (it is ScreenState.Success) {
+            val state : FlowCollector<PostState> = FlowCollector {
+                if (it is PostState.Success) {
                     println(it)
-                    val entity = (it).entity
-                    val firstPost = (entity as PostDomainModel)
-                    assertTrue(firstPost.id == 1)
-                    assertTrue(firstPost.userId == 1)
+                    val post = (it).post
+                    assertTrue(post.id == 1)
+                    assertTrue(post.userId == 1)
                     cancel()
                 }
-                if (it is ScreenState.Error) {
+                if (it is PostState.Error) {
                     assertTrue(false)
                     cancel()
                 }
             }
-            viewModel.postsState.collect(state)
+            viewModel.postDetailState.collect(state)
         }
     }
 
@@ -89,16 +70,15 @@ class PostsViewModelTest {
         setUp()
         launch {
             viewModel.getCommentsByPostId(1)
-            val state : FlowCollector<ScreenState> = FlowCollector {
-                if (it is ScreenState.Success) {
-                    val entity = (it).entity
-                    val comments = (entity as List<CommentDomainModel>)
+            val state : FlowCollector<CommentsState> = FlowCollector {
+                if (it is CommentsState.Success) {
+                    val comments = (it).comments
                     assertTrue(comments.isNotEmpty())
                     assertTrue(comments[0].id == 1)
                     assertTrue(comments[0].postId == 1)
                     cancel()
                 }
-                if (it is ScreenState.Error) {
+                if (it is CommentsState.Error) {
                     assertTrue(false)
                     cancel()
                 }

@@ -8,25 +8,23 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import de.olegrom.postbook.domain.domain_model.CommentDomainModel
-import de.olegrom.postbook.domain.domain_model.PostDomainModel
 import de.olegrom.postbook.presentation.ui.common.ErrorWidget
 import de.olegrom.postbook.presentation.ui.common.PageLoadingView
-import de.olegrom.postbook.presentation.ui.main.ScreenState
 import de.olegrom.postbook.presentation.ui.main.TopAppBarViewModel
+import de.olegrom.postbook.presentation.ui.main.states.CommentsState
+import de.olegrom.postbook.presentation.ui.main.states.PostState
 import de.olegrom.postbook.presentation.ui.posts.widgets.CommentCard
 import de.olegrom.postbook.presentation.ui.posts.widgets.PostCard
 import kotlinx.coroutines.flow.update
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun PostScreen(
     modifier: Modifier,
     postId: Int,
-    viewModel: PostsViewModel = getViewModel(),
-    topAppBarViewModel: TopAppBarViewModel = getViewModel()
+    viewModel: PostsViewModel,
+    topAppBarViewModel: TopAppBarViewModel
 ) {
-    val postsState by viewModel.postsState.collectAsState()
+    val postState by viewModel.postDetailState.collectAsState()
     val commentsState by viewModel.commentsState.collectAsState()
     viewModel.getPostById(postId)
     viewModel.getCommentsByPostId(postId)
@@ -41,22 +39,22 @@ fun PostScreen(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        when (postsState) {
-            is ScreenState.Error -> ErrorWidget((postsState as ScreenState.Error).errorMessage)
-            ScreenState.Idle -> {}
-            ScreenState.Loading -> PageLoadingView(modifier)
-            is ScreenState.Success -> {
-                val post = (postsState as ScreenState.Success).entity as PostDomainModel
+        when (postState) {
+            is PostState.Error -> ErrorWidget((postState as PostState.Error).errorMessage)
+            is PostState.Idle -> {}
+            is PostState.Loading -> PageLoadingView(modifier)
+            is PostState.Success -> {
+                val post = (postState as PostState.Success).post
                 topAppBarViewModel.title.update { post.title }
                 PostCard(post)
             }
         }
         when (commentsState) {
-            is ScreenState.Error -> ErrorWidget((commentsState as ScreenState.Error).errorMessage)
-            ScreenState.Idle -> {}
-            ScreenState.Loading -> PageLoadingView(modifier)
-            is ScreenState.Success -> {
-                val comments = (commentsState as ScreenState.Success).entity as List<CommentDomainModel>
+            is CommentsState.Error -> {}
+            is CommentsState.Idle -> {}
+            is CommentsState.Loading -> PageLoadingView(modifier)
+            is CommentsState.Success -> {
+                val comments = (commentsState as CommentsState.Success).comments
                 comments.forEach {
                     CommentCard(it)
                 }

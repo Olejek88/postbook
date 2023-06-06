@@ -6,17 +6,16 @@ import de.olegrom.postbook.data.preferences.SharedPreferenceHelper
 import de.olegrom.postbook.domain.domain_model.UserDomainModel
 import de.olegrom.postbook.domain.usecase.GetUserUseCase
 import de.olegrom.postbook.domain.util.asResult
-import de.olegrom.postbook.presentation.ui.main.ScreenState
+import de.olegrom.postbook.presentation.ui.main.states.LoginState
 import de.olegrom.postbook.domain.util.Result
-import de.olegrom.postbook.domain.util.asCommonFlow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class LoginViewModel(private val getUserUseCase: GetUserUseCase,
-                     val preferences: SharedPreferenceHelper
+                     private val preferences: SharedPreferenceHelper? = null
 ) : ViewModel() {
-    private val _state = MutableStateFlow<ScreenState>(ScreenState.Idle)
+    private val _state = MutableStateFlow<LoginState>(LoginState.Idle)
     var state = _state.asStateFlow()
     fun getUserById(id: Int) {
         viewModelScope.launch {
@@ -25,27 +24,28 @@ class LoginViewModel(private val getUserUseCase: GetUserUseCase,
                 when (result) {
                     is Result.Error -> {
                         _state.update {
-                            ScreenState.Error(result.exception.message)
+                            LoginState.Error(result.exception.message)
                         }
                     }
-                    is Result.Idle -> {}
                     is Result.Loading -> {
                         _state.update {
-                            ScreenState.Loading
+                            LoginState.Loading
                         }
                     }
                     is Result.Success -> {
                         if (result.data is UserDomainModel) {
-                            preferences.setUserId(result.data.id)
+                            preferences?.setUserId(result.data.id)
                             _state.update {
-                                ScreenState.Success(result.data)
+                                Timber.i("update state")
+                                LoginState.Success(result.data)
                             }
                         } else {
                             _state.update {
-                                ScreenState.Error("User with this ID doesn't exist")
+                                LoginState.Error("User with this ID doesn't exist")
                             }
                         }
                     }
+                    is Result.Idle -> {}
                 }
             }
         }

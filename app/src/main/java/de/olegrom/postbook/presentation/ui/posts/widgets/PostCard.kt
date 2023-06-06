@@ -30,7 +30,7 @@ fun PostCard(
     favouritesViewModel: FavouritesViewModel = getViewModel(),
     itemClick: () -> Unit = {}
 ) {
-    val currentFavStatus = remember { mutableStateOf(favouritesViewModel.isPostFavourite(post.id)) }
+    val currentFavStatus = mutableStateOf(favouritesViewModel.isPostFavourite(post.id))
     Card(
         modifier = Modifier
             .fillMaxWidth()

@@ -24,16 +24,21 @@ import de.olegrom.postbook.R
 import de.olegrom.postbook.domain.domain_model.UserDomainModel
 import de.olegrom.postbook.presentation.navigation.main.Screen
 import de.olegrom.postbook.presentation.ui.common.ErrorWidget
-import de.olegrom.postbook.presentation.ui.main.ScreenState
+import de.olegrom.postbook.presentation.ui.common.PageLoadingView
+import de.olegrom.postbook.presentation.ui.main.states.LoginState
+import de.olegrom.postbook.presentation.ui.posts.PostsViewModel
 import de.olegrom.postbook.presentation.utils.TestTag
+import timber.log.Timber
 
 @Composable
 fun LoginScreen(
     modifier: Modifier,
     navController: NavHostController,
     viewModel: LoginViewModel = getViewModel(),
+    postViewModel: PostsViewModel = getViewModel(),
     topAppBarViewModel: TopAppBarViewModel = getViewModel()
 ) {
+    var currentUser by remember { mutableStateOf<UserDomainModel?>(null)}
     val state by viewModel.state.collectAsState()
     topAppBarViewModel.title.update { stringResource(id = R.string.login) }
     var id by remember { mutableStateOf("") }
@@ -74,11 +79,17 @@ fun LoginScreen(
                 }
             )
             when (state) {
-                is ScreenState.Error -> ErrorWidget((state as ScreenState.Error).errorMessage)
-                ScreenState.Idle -> {}
-                ScreenState.Loading -> {}
-                is ScreenState.Success -> {
-                    val user = (state as ScreenState.Success).entity as UserDomainModel
+                is LoginState.Error -> ErrorWidget((state as LoginState.Error).errorMessage)
+                is LoginState.Idle -> {}
+                is LoginState.Loading -> {
+                    PageLoadingView(modifier)
+                }
+                is LoginState.Success -> {
+                    if (currentUser == null) {
+                        currentUser = (state as LoginState.Success).user
+                        postViewModel.getAllPosts(false)
+                        // TODO store user data?
+                    }
                     navController.navigate(Screen.Posts.route)
                 }
             }
