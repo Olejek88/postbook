@@ -20,7 +20,6 @@ class LoginViewModel(private val getUserUseCase: GetUserUseCase,
     fun getUserById(id: Int) {
         viewModelScope.launch {
             getUserUseCase.invoke(id = id).asResult().collectLatest { result ->
-                Timber.i("res=${result}")
                 when (result) {
                     is Result.Error -> {
                         _state.update {
@@ -36,7 +35,6 @@ class LoginViewModel(private val getUserUseCase: GetUserUseCase,
                         if (result.data is UserDomainModel) {
                             preferences?.setUserId(result.data.id)
                             _state.update {
-                                Timber.i("update state")
                                 LoginState.Success(result.data)
                             }
                         } else {

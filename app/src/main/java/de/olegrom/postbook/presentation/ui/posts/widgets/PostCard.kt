@@ -81,9 +81,3 @@ fun PostCard(
         }
     }
 }
-
-@Preview
-@Composable
-fun PostCardPreview() {
-    PostCard(PostDomainModel())
-}

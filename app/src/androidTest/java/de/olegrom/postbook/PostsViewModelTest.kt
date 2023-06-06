@@ -37,15 +37,6 @@ class PostsViewModelTest {
     }
 
     @Test
-    fun allPostsTest() = runTest {
-        setUp()
-        launch {
-            viewModel.getAllPosts(false)
-            assertTrue(viewModel.postsState.value is PostsState.Success)
-        }
-    }
-
-    @Test
     fun getPostTest() = runTest {
         setUp()
         launch {

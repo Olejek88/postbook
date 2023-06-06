@@ -23,6 +23,6 @@ fun PageLoadingView(modifier: Modifier) {
 
 @Preview
 @Composable
-fun PageLoadingView() {
-    PageLoadingView()
+fun PageLoadingViewPreview() {
+    PageLoadingView(Modifier)
 }

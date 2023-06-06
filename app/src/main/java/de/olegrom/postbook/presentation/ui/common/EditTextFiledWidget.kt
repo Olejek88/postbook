@@ -18,6 +18,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.olegrom.postbook.presentation.theme.PostBookTheme
 import de.olegrom.postbook.presentation.utils.TestTag
 
 @Composable
@@ -38,7 +39,9 @@ fun EditTextFieldWidget(
             .padding(horizontal = 5.dp)
     ) {
         OutlinedTextField(
-            modifier = Modifier.testTag(TestTag.inputField).fillMaxWidth(),
+            modifier = Modifier
+                .testTag(TestTag.inputField)
+                .fillMaxWidth(),
             shape = RoundedCornerShape(5.dp),
             value = text,
             label = { Text(text = title) },
@@ -65,5 +68,7 @@ fun EditTextFieldWidget(
 @Preview
 @Composable
 fun EditTextFieldWidgetPreview() {
-    EditTextFieldWidget("Sample text", "Subtext", type = KeyboardType.Text, onTextChanged = {})
+    PostBookTheme {
+        EditTextFieldWidget("Sample text", "Subtext", type = KeyboardType.Text, onTextChanged = {})
+    }
 }

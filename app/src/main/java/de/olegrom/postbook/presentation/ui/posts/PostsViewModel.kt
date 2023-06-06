@@ -14,7 +14,6 @@ import de.olegrom.postbook.presentation.ui.main.states.PostState
 import de.olegrom.postbook.presentation.ui.main.states.PostsState
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class PostsViewModel(
     private val getPostUseCase: GetPostUseCase,
@@ -83,7 +82,6 @@ class PostsViewModel(
     fun getAllPosts(onlyFav: Boolean) {
         val userId = preferences?.getUserId() ?: 1
         viewModelScope.launch {
-            Timber.i("getAllPosts(${onlyFav})")
             getPostsUseCase.invoke(userId, onlyFav).asResult().collectLatest { result ->
                 when (result) {
                     is Result.Error -> {
@@ -94,7 +92,6 @@ class PostsViewModel(
                         postsState.postValue(PostsState.Loading)
                     }
                     is Result.Success -> {
-                        Timber.i("setState(${result.data.size})")
                         postsState.postValue(PostsState.Success(result.data))
                     }
                 }
