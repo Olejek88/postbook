@@ -1,6 +1,5 @@
 package de.olegrom.postbook
 
-import de.olegrom.postbook.data.preferences.SharedPreferenceHelper
 import de.olegrom.postbook.data.remote.service.FakeKtorService
 import de.olegrom.postbook.data.repository.ImplRepository
 import de.olegrom.postbook.domain.usecase.GetUserUseCase
@@ -16,7 +15,6 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.koin.android.ext.koin.androidContext
 
 class LoginViewModelTest {
     private val viewModel = LoginViewModel(GetUserUseCase(ImplRepository(FakeKtorService())))

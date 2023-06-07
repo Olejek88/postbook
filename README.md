@@ -27,6 +27,6 @@ To run your application on an Android emulator:
 <br/>In the list of run configurations, select app.
 <br/>Choose your virtual device and click Run
 
-<p><img src="https://github.com/Olejek88/postbook/blob/master/screen1.png" width="20%">
-<img src="https://github.com/Olejek88/postbook/blob/master/screen2.png" width="20%"></p>
+<p><img src="https://github.com/Olejek88/postbook/blob/master/screen1.png" width="30%">
+<img src="https://github.com/Olejek88/postbook/blob/master/screen2.png" width="30%"></p>
 

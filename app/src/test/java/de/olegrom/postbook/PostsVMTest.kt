@@ -13,15 +13,11 @@ import de.olegrom.postbook.presentation.ui.main.states.PostState
 import de.olegrom.postbook.presentation.ui.main.states.PostsState
 import de.olegrom.postbook.presentation.ui.posts.PostsViewModel
 import io.mockk.*
-import junit.framework.Assert
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.test.TestDispatcher
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
@@ -59,10 +55,32 @@ class PostsVMTest {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `Given userID, should return mocked post for user`() {
+    fun `Given postID = 1, should return mocked post for this ID`() = runTest {
+        val postStateFlow = viewModel.postDetailState
+        val postState = mutableListOf<PostState>()
+        val job = launch {
+            postStateFlow.toList(postState)
+        }
         viewModel.getPostById(1)
-        // TODO implement test
+        runCurrent()
+        assert(postState.last() == PostState.Success(fakeKtorService.mockedPost.asDomainModel()))
+        job.cancel()
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `Given postID = 1, should return mocked comments for this user`() = runTest {
+        val commentsStateFlow = viewModel.commentsState
+        val commentsState = mutableListOf<CommentsState>()
+        val job = launch {
+            commentsStateFlow.toList(commentsState)
+        }
+        viewModel.getCommentsByPostId(1)
+        runCurrent()
+        assert(commentsState.last() == CommentsState.Success(listOf(fakeKtorService.mockedComment.asDomainModel())))
+        job.cancel()
     }
 }
 

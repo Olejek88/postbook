@@ -1,36 +1,44 @@
 package de.olegrom.postbook
 
-import de.olegrom.postbook.data.preferences.SharedPreferenceHelper
-import de.olegrom.postbook.domain.domain_model.UserDomainModel
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import de.olegrom.postbook.data.remote.dto.asDomainModel
+import de.olegrom.postbook.data.remote.service.FakeKtorService
+import de.olegrom.postbook.data.repository.ImplRepository
 import de.olegrom.postbook.domain.usecase.GetUserUseCase
 import de.olegrom.postbook.presentation.ui.login.LoginViewModel
 import de.olegrom.postbook.presentation.ui.main.states.LoginState
-import io.mockk.coVerify
-import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
-import org.junit.Assert
-import org.junit.Before
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.runTest
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TestRule
 
 internal class LoginViewModelTest {
-    private lateinit var viewModel: LoginViewModel
-    private val getUserUseCase: GetUserUseCase = mockk()
-    private val preferenceHelper: SharedPreferenceHelper = mockk()
-    private lateinit var viewStates: MutableList<LoginState.Idle>
+    private val fakeKtorService = FakeKtorService()
+    private val viewModel = LoginViewModel(
+        GetUserUseCase(ImplRepository(fakeKtorService))
+    )
 
-    @Before
-    fun setUp() {
-        //Dispatchers.setMain(Dispatchers.Unconfined)
-        viewStates = mutableListOf()
-        viewModel = LoginViewModel(getUserUseCase, preferenceHelper)
-    }
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
 
-    @Before
-    fun getUserById() {
-        viewModel.getUserById(1)
-        coVerify {
-            getUserUseCase.invoke(1)
+    @get:Rule
+    var rule: TestRule = InstantTaskExecutorRule()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `Given userID = 1, should return mocked user for this userId`() = runTest {
+        val loginStateFlow = viewModel.state
+        val loginState = mutableListOf<LoginState>()
+        val job = launch {
+            loginStateFlow.toList(loginState)
         }
-        Assert.assertEquals(LoginState.Loading, viewStates[0])
-        Assert.assertEquals(LoginState.Success(UserDomainModel()), viewStates[1])
+        viewModel.getUserById(1)
+        runCurrent()
+        assert(loginState.last() == LoginState.Success(fakeKtorService.mockedUser.asDomainModel()!!))
+        job.cancel()
     }
 }
